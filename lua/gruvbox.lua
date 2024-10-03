@@ -125,6 +125,7 @@ Gruvbox.palette = {
   light_aqua = "#e8e5b5",
   light_aqua_soft = "#e1dbac",
   gray = "#928374",
+  bright_magenta = "#ff00ff",
 }
 
 -- get a hex list of gruvbox colors based on current bg and constrast config
@@ -168,6 +169,7 @@ local function get_colors()
       dark_green = p.dark_green,
       dark_aqua = p.dark_aqua,
       gray = p.gray,
+      magenta = p.bright_magenta,
     },
     light = {
       bg0 = p.light0,
@@ -197,6 +199,7 @@ local function get_colors()
       dark_green = p.light_green,
       dark_aqua = p.light_aqua,
       gray = p.gray,
+      magenta = p.bright_magenta,
     },
   }
 
@@ -323,7 +326,8 @@ local function get_groups()
     SignColumn = config.transparent_mode and { bg = nil } or { bg = colors.bg1 },
     Folded = { fg = colors.gray, bg = colors.bg1, italic = config.italic.folds },
     FoldColumn = config.transparent_mode and { fg = colors.gray, bg = nil } or { fg = colors.gray, bg = colors.bg1 },
-    Cursor = { reverse = config.inverse },
+    --Cursor = { reverse = config.inverse },
+    Cursor = { fg = colors.light2, bg = colors.magenta, reverse = config.inverse },
     vCursor = { link = "Cursor" },
     iCursor = { link = "Cursor" },
     lCursor = { link = "Cursor" },
