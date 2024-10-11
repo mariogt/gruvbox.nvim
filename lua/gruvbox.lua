@@ -202,7 +202,7 @@ local function get_colors()
       dark_aqua = p.light_aqua,
       gray = p.gray,
       magenta = p.bright_magenta,
-      dark_rose = p.dark_rose,
+      dark_rose = p.light_red_hard,
     },
   }
 
