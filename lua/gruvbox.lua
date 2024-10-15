@@ -143,7 +143,7 @@ local function get_colors()
 
   local color_groups = {
     dark = {
-      bg0 = p.dark0,
+      bg0 = p.dark0_soft,
       bg1 = p.dark1,
       bg2 = p.dark2,
       bg3 = p.dark3,
