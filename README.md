@@ -4,7 +4,13 @@
 
 A port of [gruvbox community](https://github.com/gruvbox-community/gruvbox) theme to lua with [treesitter](https://github.com/nvim-treesitter/nvim-treesitter) and [semantic highlights](https://neovim.io/doc/user/lsp.html#lsp-semantic-highlight) support!
 
-This fork of \[ellisonleao/gruvbox.nvim\] is heavely moded by Me \[mariogt\], with several new/changed colors, to make it look better and smoother to the eyes, enjoy!
+# Description
+
+This fork of ***ellisonleao/gruvbox.nvim*** has been heavily modified by me ***mariogt***.
+It introduces several new and adjusted colors, designed to enhance readability and provide a smoother, more eye‑friendly experience.
+Enjoy the refreshed look!
+
+# Screenshots
 
 <p align="center">
     <img src="https://mariogt.com/Media/gruvBoxMedia/mariogt_gruvbox_dark.png" height="60%"/>
