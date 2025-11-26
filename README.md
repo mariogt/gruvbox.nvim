@@ -6,8 +6,9 @@ A port of [gruvbox community](https://github.com/gruvbox-community/gruvbox) them
 
 # Description
 
-My fork of ***ellisonleao/gruvbox.nvim*** introduces several new and adjusted colors, designed to enhance readability and provide a smoother, more eye‑friendly experience.
-Enjoy the refreshed look!
+My fork of ***ellisonleao/gruvbox.nvim*** introduces several new and adjusted colors, designed to enhance readability and provide a smoother, more eye‑friendly experience.Also the original files structure and code have been trimmed, to improve maintainability and facilitate future updates (bye bye tests, github actions and copilot stuff).
+
+***Enjoy!***
 
 # Screenshots
 
