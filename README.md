@@ -1,7 +1,7 @@
 <div align="center">
       <h1> <img src="https://i.postimg.cc/WpQzgxVh/plugin-Icon.png" width="80px"><br/>gruvbox.nvim</h1>
      </div>
-<p align="center"> 
+<p align="center">
       <a href="https://twitter.com/intent/user?screen_name=ellisonleao" target="_blank"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/ellisonleao?style=for-the-badge" style="vertical-align:center" ></a>
       <a href="#"><img alt="Made with Lua" src="https://img.shields.io/badge/Made%20with%20Lua-blueviolet.svg?style=for-the-badge&logo=lua" style="vertical-align:center" /></a>
 </p>
@@ -9,7 +9,8 @@
 A port of [gruvbox community](https://github.com/gruvbox-community/gruvbox) theme to lua with [treesitter](https://github.com/nvim-treesitter/nvim-treesitter) and [semantic highlights](https://neovim.io/doc/user/lsp.html#lsp-semantic-highlight) support!
 
 <p align="center">
-    <img src="https://i.postimg.cc/fy3tnGFt/gruvbox-themes.png" />
+    <img src="https://mariogt.com/Media/gruvBoxMedia/mariogt_gruvbox_dark.png" height="60%"/>
+    <img src="https://mariogt.com/Media/gruvBoxMedia/mariogt_gruvbox_light.png" height="60%"/>
 </p>
 
 # Prerequisites
