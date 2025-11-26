@@ -97,7 +97,7 @@ Gruvbox.palette = {
   neutral_red = "#cc241d",
   neutral_green = "#98971a",
   dark_neutral_green = "#79740e",
-  dark_yellow_hard = "#806000",
+  dark_yellow_hard = "#5c480a",
   neutral_yellow = "#d79921",
   dark_neutral_yellow = "#b57614",
   neutral_blue = "#458588",
@@ -134,7 +134,6 @@ Gruvbox.palette = {
   light_aqua_hard = "#e6e9c1",
   light_aqua = "#e8e5b5",
   light_aqua_soft = "#e1dbac",
-  gray = "#928374",
 }
 
 -- get a hex list of gruvbox colors based on current bg and constrast config
@@ -177,7 +176,7 @@ local function get_colors()
       dark_red = p.dark_red,
       dark_green = p.dark_green,
       dark_aqua = p.dark_aqua,
-      gray = p.gray,
+      gray = p.dark2,
       magenta = p.bright_magenta,
       visual_color = p.dark_purple_hard,
     },
@@ -208,7 +207,7 @@ local function get_colors()
       dark_red = p.light_red,
       dark_green = p.light_green,
       dark_aqua = p.light_aqua,
-      gray = p.gray,
+      gray = p.dark2,
       magenta = p.bright_magenta,
       visual_color = p.light_red_hard,
     },
