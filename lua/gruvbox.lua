@@ -208,7 +208,7 @@ local function get_colors()
       dark_red = p.light_red,
       dark_green = p.light_green,
       dark_aqua = p.light_aqua,
-      gray = p.dark2,
+      gray = p.dark3,
       magenta = p.bright_magenta,
       visual_color = p.light_red_hard,
     },
