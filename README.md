@@ -25,19 +25,19 @@ Neovim 0.8.0+
 ## Using `packer`
 
 ```lua
-use { "ellisonleao/gruvbox.nvim" }
+use { "mariogt/gruvbox.nvim" }
 ```
 
 ## Using `lazy.nvim`
 
 ```lua
-{ "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...}
+{ "mariogt/gruvbox.nvim", priority = 1000 , config = true, opts = ...}
 ```
 
 ## Using `vim-plug`
 
 ```vim
-Plug 'ellisonleao/gruvbox.nvim'
+Plug 'mariogt/gruvbox.nvim'
 ```
 
 # Basic Usage
