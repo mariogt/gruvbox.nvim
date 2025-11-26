@@ -174,7 +174,7 @@ local function get_colors()
       visual_color = p.dark_rose,
     },
     light = {
-      bg0 = p.light0_soft,
+      bg0 = p.light2,
       bg1 = p.light1,
       bg2 = p.light2,
       bg3 = p.light3,
