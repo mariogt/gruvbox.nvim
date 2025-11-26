@@ -29,21 +29,23 @@ local Gruvbox = {}
 ---@field nocombine boolean?
 
 ---@class GruvboxConfig
----@field terminal_colors boolean?
----@field undercurl boolean?
----@field underline boolean?
 ---@field bold boolean?
----@field italic ItalicConfig?
----@field strikethrough boolean?
 ---@field contrast Contrast?
+---@field dim_inactive boolean?
+---@field inverse boolean?
 ---@field invert_selection boolean?
 ---@field invert_signs boolean?
 ---@field invert_tabline boolean?
----@field invert_intend_guides boolean?
----@field inverse boolean?
+---@field italic ItalicConfig?
 ---@field overrides table<string, HighlightDefinition>?
 ---@field palette_overrides table<string, string>?
-Gruvbox.config = {
+---@field strikethrough boolean?
+---@field terminal_colors boolean?
+---@field transparent_mode boolean?
+---@field undercurl boolean?
+---@field underline boolean?
+
+local default_config = {
   terminal_colors = true,
   undercurl = true,
   underline = true,
@@ -59,7 +61,6 @@ Gruvbox.config = {
   invert_selection = false,
   invert_signs = false,
   invert_tabline = false,
-  invert_intend_guides = false,
   inverse = true,
   contrast = "",
   palette_overrides = {},
@@ -67,6 +68,8 @@ Gruvbox.config = {
   dim_inactive = false,
   transparent_mode = false,
 }
+
+Gruvbox.config = vim.deepcopy(default_config)
 
 -- main gruvbox color palette
 ---@class GruvboxPalette
@@ -320,8 +323,8 @@ local function get_groups()
     CurSearch = { link = "IncSearch" },
     QuickFixLine = { link = "GruvboxPurple" },
     Underlined = { fg = colors.blue, underline = config.underline },
-    StatusLine = { fg = colors.bg2, bg = colors.fg1, reverse = config.inverse },
-    StatusLineNC = { fg = colors.bg1, bg = colors.fg4, reverse = config.inverse },
+    StatusLine = { fg = colors.bg1, bg = colors.fg2 },
+    StatusLineNC = { fg = colors.fg4, bg = colors.bg1 },
     WinBar = { fg = colors.fg4, bg = colors.bg0 },
     WinBarNC = { fg = colors.fg3, bg = colors.bg1 },
     WinSeparator = config.transparent_mode and { fg = colors.bg3, bg = nil } or { fg = colors.bg3, bg = colors.bg0 },
@@ -387,27 +390,33 @@ local function get_groups()
     Delimiter = { link = "GruvboxOrange" },
     EndOfBuffer = { link = "NonText" },
     DiagnosticError = { link = "GruvboxRed" },
-    DiagnosticSignError = { link = "GruvboxRedSign" },
-    DiagnosticUnderlineError = { link = "GruvboxRedUnderline" },
     DiagnosticWarn = { link = "GruvboxYellow" },
-    DiagnosticSignWarn = { link = "GruvboxYellowSign" },
-    DiagnosticUnderlineWarn = { link = "GruvboxYellowUnderline" },
     DiagnosticInfo = { link = "GruvboxBlue" },
-    DiagnosticSignInfo = { link = "GruvboxBlueSign" },
-    DiagnosticUnderlineInfo = { link = "GruvboxBlueUnderline" },
+    DiagnosticDeprecated = { strikethrough = config.strikethrough },
     DiagnosticHint = { link = "GruvboxAqua" },
+    DiagnosticOk = { link = "GruvboxGreen" },
+    DiagnosticSignError = { link = "GruvboxRedSign" },
+    DiagnosticSignWarn = { link = "GruvboxYellowSign" },
+    DiagnosticSignInfo = { link = "GruvboxBlueSign" },
     DiagnosticSignHint = { link = "GruvboxAquaSign" },
+    DiagnosticSignOk = { link = "GruvboxGreenSign" },
+    DiagnosticUnderlineError = { link = "GruvboxRedUnderline" },
+    DiagnosticUnderlineWarn = { link = "GruvboxYellowUnderline" },
+    DiagnosticUnderlineInfo = { link = "GruvboxBlueUnderline" },
     DiagnosticUnderlineHint = { link = "GruvboxAquaUnderline" },
+    DiagnosticUnderlineOk = { link = "GruvboxGreenUnderline" },
     DiagnosticFloatingError = { link = "GruvboxRed" },
     DiagnosticFloatingWarn = { link = "GruvboxOrange" },
     DiagnosticFloatingInfo = { link = "GruvboxBlue" },
     DiagnosticFloatingHint = { link = "GruvboxAqua" },
+    DiagnosticFloatingOk = { link = "GruvboxGreen" },
     DiagnosticVirtualTextError = { link = "GruvboxRed" },
     DiagnosticVirtualTextWarn = { link = "GruvboxYellow" },
     DiagnosticVirtualTextInfo = { link = "GruvboxBlue" },
     DiagnosticVirtualTextHint = { link = "GruvboxAqua" },
-    DiagnosticOk = { link = "GruvboxGreenSign" },
+    DiagnosticVirtualTextOk = { link = "GruvboxGreen" },
     LspReferenceRead = { link = "GruvboxYellowBold" },
+    LspReferenceTarget = { link = "Visual" },
     LspReferenceText = { link = "GruvboxYellowBold" },
     LspReferenceWrite = { link = "GruvboxOrangeBold" },
     LspCodeLens = { link = "GruvboxGray" },
@@ -481,6 +490,7 @@ local function get_groups()
     CocDiagnosticsWarning = { link = "GruvboxOrange" },
     CocDiagnosticsInfo = { link = "GruvboxBlue" },
     CocDiagnosticsHint = { link = "GruvboxAqua" },
+    CocSearch = { link = "GruvboxBlue" },
     CocSelectedText = { link = "GruvboxRed" },
     CocMenuSel = { link = "PmenuSel" },
     CocCodeLens = { link = "GruvboxGray" },
@@ -488,15 +498,25 @@ local function get_groups()
     CocWarningHighlight = { link = "GruvboxOrangeUnderline" },
     CocInfoHighlight = { link = "GruvboxBlueUnderline" },
     CocHintHighlight = { link = "GruvboxAquaUnderline" },
+    SnacksPicker = { link = "GruvboxFg1" },
+    SnacksPickerBorder = { link = "SnacksPicker" },
+    SnacksPickerListCursorLine = { link = "CursorLine" },
+    SnacksPickerMatch = { link = "GruvboxOrange" },
+    SnacksPickerPrompt = { link = "GruvboxRed" },
+    SnacksPickerTitle = { link = "SnacksPicker" },
+    SnacksPickerDir = { link = "GruvboxGray" },
+    SnacksPickerPathHidden = { link = "GruvboxGray" },
+    SnacksPickerGitStatusUntracked = { link = "GruvboxGray" },
+    SnacksPickerPathIgnored = { link = "GruvboxBg3" },
     TelescopeNormal = { link = "GruvboxFg1" },
-    TelescopeSelection = { link = "GruvboxOrangeBold" },
+    TelescopeSelection = { link = "CursorLine" },
     TelescopeSelectionCaret = { link = "GruvboxRed" },
     TelescopeMultiSelection = { link = "GruvboxGray" },
     TelescopeBorder = { link = "TelescopeNormal" },
     TelescopePromptBorder = { link = "TelescopeNormal" },
     TelescopeResultsBorder = { link = "TelescopeNormal" },
     TelescopePreviewBorder = { link = "TelescopeNormal" },
-    TelescopeMatching = { link = "GruvboxBlue" },
+    TelescopeMatching = { link = "GruvboxOrange" },
     TelescopePromptPrefix = { link = "GruvboxRed" },
     TelescopePrompt = { link = "TelescopeNormal" },
     CmpItemAbbr = { link = "GruvboxFg0" },
@@ -529,6 +549,38 @@ local function get_groups()
     CmpItemKindConstant = { link = "GruvboxOrange" },
     CmpItemKindStruct = { link = "GruvboxYellow" },
     CmpItemKindTypeParameter = { link = "GruvboxYellow" },
+    BlinkCmpLabel = { link = "GruvboxFg0" },
+    BlinkCmpLabelDeprecated = { link = "GruvboxFg1" },
+    BlinkCmpLabelMatch = { link = "GruvboxBlueBold" },
+    BlinkCmpLabelDetail = { link = "GruvboxGray" },
+    BlinkCmpLabelDescription = { link = "GruvboxGray" },
+    BlinkCmpKindText = { link = "GruvboxOrange" },
+    BlinkCmpKindVariable = { link = "GruvboxOrange" },
+    BlinkCmpKindMethod = { link = "GruvboxBlue" },
+    BlinkCmpKindFunction = { link = "GruvboxBlue" },
+    BlinkCmpKindConstructor = { link = "GruvboxYellow" },
+    BlinkCmpKindUnit = { link = "GruvboxBlue" },
+    BlinkCmpKindField = { link = "GruvboxBlue" },
+    BlinkCmpKindClass = { link = "GruvboxYellow" },
+    BlinkCmpKindInterface = { link = "GruvboxYellow" },
+    BlinkCmpKindModule = { link = "GruvboxBlue" },
+    BlinkCmpKindProperty = { link = "GruvboxBlue" },
+    BlinkCmpKindValue = { link = "GruvboxOrange" },
+    BlinkCmpKindEnum = { link = "GruvboxYellow" },
+    BlinkCmpKindOperator = { link = "GruvboxYellow" },
+    BlinkCmpKindKeyword = { link = "GruvboxPurple" },
+    BlinkCmpKindEvent = { link = "GruvboxPurple" },
+    BlinkCmpKindReference = { link = "GruvboxPurple" },
+    BlinkCmpKindColor = { link = "GruvboxPurple" },
+    BlinkCmpKindSnippet = { link = "GruvboxGreen" },
+    BlinkCmpKindFile = { link = "GruvboxBlue" },
+    BlinkCmpKindFolder = { link = "GruvboxBlue" },
+    BlinkCmpKindEnumMember = { link = "GruvboxAqua" },
+    BlinkCmpKindConstant = { link = "GruvboxOrange" },
+    BlinkCmpKindStruct = { link = "GruvboxYellow" },
+    BlinkCmpKindTypeParameter = { link = "GruvboxYellow" },
+    BlinkCmpSource = { link = "GruvboxGray" },
+    BlinkCmpGhostText = { link = "GruvboxBg4" },
     diffAdded = { link = "DiffAdd" },
     diffRemoved = { link = "DiffDelete" },
     diffChanged = { link = "DiffChange" },
@@ -1066,12 +1118,12 @@ local function get_groups()
     MiniStatuslineFileinfo = { link = "StatusLine" },
     MiniStatuslineFilename = { link = "StatusLineNC" },
     MiniStatuslineInactive = { link = "StatusLineNC" },
-    MiniStatuslineModeCommand = { fg = colors.bg0, bg = colors.yellow, bold = config.bold },
-    MiniStatuslineModeInsert = { fg = colors.bg0, bg = colors.blue, bold = config.bold },
-    MiniStatuslineModeNormal = { fg = colors.bg0, bg = colors.fg1, bold = config.bold },
-    MiniStatuslineModeOther = { fg = colors.bg0, bg = colors.aqua, bold = config.bold },
-    MiniStatuslineModeReplace = { fg = colors.bg0, bg = colors.red, bold = config.bold },
-    MiniStatuslineModeVisual = { fg = colors.bg0, bg = colors.green, bold = config.bold },
+    MiniStatuslineModeCommand = { fg = colors.bg0, bg = colors.yellow, bold = config.bold, nocombine = true },
+    MiniStatuslineModeInsert = { fg = colors.bg0, bg = colors.blue, bold = config.bold, nocombine = true },
+    MiniStatuslineModeNormal = { fg = colors.bg0, bg = colors.fg1, bold = config.bold, nocombine = true },
+    MiniStatuslineModeOther = { fg = colors.bg0, bg = colors.aqua, bold = config.bold, nocombine = true },
+    MiniStatuslineModeReplace = { fg = colors.bg0, bg = colors.red, bold = config.bold, nocombine = true },
+    MiniStatuslineModeVisual = { fg = colors.bg0, bg = colors.green, bold = config.bold, nocombine = true },
     MiniSurround = { link = "IncSearch" },
     MiniTablineCurrent = { fg = colors.green, bg = colors.bg1, bold = config.bold, reverse = config.invert_tabline },
     MiniTablineFill = { link = "TabLineFill" },
@@ -1090,6 +1142,12 @@ local function get_groups()
     MiniTestFail = { link = "GruvboxRedBold" },
     MiniTestPass = { link = "GruvboxGreenBold" },
     MiniTrailspace = { bg = colors.red },
+    WhichKeyTitle = { link = "NormalFloat" },
+    NeoTreeFloatBorder = { link = "GruvboxGray" },
+    NeoTreeTitleBar = { fg = colors.fg1, bg = colors.bg2 },
+    NeoTreeDirectoryIcon = { link = "GruvboxGreen" },
+    NeoTreeDirectoryName = { link = "GruvboxGreenBold" },
+
     ["@comment"] = { link = "Comment" },
     ["@none"] = { bg = "NONE", fg = "NONE" },
     ["@preproc"] = { link = "PreProc" },
@@ -1216,6 +1274,7 @@ local function get_groups()
     ["@lsp.type.interface"] = { link = "@constructor" },
     ["@lsp.type.macro"] = { link = "@macro" },
     ["@lsp.type.method"] = { link = "@method" },
+    ["@lsp.type.modifier.java"] = { link = "@keyword.type.java" },
     ["@lsp.type.namespace"] = { link = "@namespace" },
     ["@lsp.type.parameter"] = { link = "@parameter" },
     ["@lsp.type.property"] = { link = "@property" },
@@ -1223,6 +1282,39 @@ local function get_groups()
     ["@lsp.type.type"] = { link = "@type" },
     ["@lsp.type.typeParameter"] = { link = "@type.definition" },
     ["@lsp.type.variable"] = { link = "@variable" },
+
+    -- NeoTreeDirectoryName = { link = "Directory" },
+    -- NeoTreeDotfile = { fg = colors.fg4 },
+    -- NeoTreeFadeText1 = { fg = colors.fg3 },
+    -- NeoTreeFadeText2 = { fg = colors.fg4 },
+    -- NeoTreeFileIcon = { fg = colors.blue },
+    -- NeoTreeFileName = { fg = colors.fg1 },
+    -- NeoTreeFileNameOpened = { fg = colors.fg1, bold = true },
+    -- NeoTreeFileStats = { fg = colors.fg3 },
+    -- NeoTreeFileStatsHeader = { fg = colors.fg2, italic = true },
+    -- NeoTreeFilterTerm = { link = "SpecialChar" },
+    -- NeoTreeHiddenByName = { link = "NeoTreeDotfile" },
+    -- NeoTreeIndentMarker = { fg = colors.fg4 },
+    -- NeoTreeMessage = { fg = colors.fg3, italic = true },
+    -- NeoTreeModified = { fg = colors.yellow },
+    -- NeoTreeRootName = { fg = colors.fg1, bold = true, italic = true },
+    -- NeoTreeSymbolicLinkTarget = { link = "NeoTreeFileName" },
+    -- NeoTreeExpander = { fg = colors.fg4 },
+    -- NeoTreeWindowsHidden = { link = "NeoTreeDotfile" },
+    -- NeoTreePreview = { link = "Search" },
+    -- NeoTreeGitAdded = { link = "GitGutterAdd" },
+    -- NeoTreeGitConflict = { fg = colors.orange, bold = true, italic = true },
+    -- NeoTreeGitDeleted = { link = "GitGutterDelete" },
+    -- NeoTreeGitIgnored = { link = "NeoTreeDotfile" },
+    -- NeoTreeGitModified = { link = "GitGutterChange" },
+    -- NeoTreeGitRenamed = { link = "NeoTreeGitModified" },
+    -- NeoTreeGitStaged = { link = "NeoTreeGitAdded" },
+    -- NeoTreeGitUntracked = { fg = colors.orange, italic = true },
+    -- NeoTreeGitUnstaged = { link = "NeoTreeGitConflict" },
+    -- NeoTreeTabActive = { fg = colors.fg1, bold = true },
+    -- NeoTreeTabInactive = { fg = colors.fg4, bg = colors.bg1 },
+    -- NeoTreeTabSeparatorActive = { fg = colors.bg1 },
+    -- NeoTreeTabSeparatorInactive = { fg = colors.bg2, bg = colors.bg1 },
   }
 
   for group, hl in pairs(config.overrides) do
@@ -1239,6 +1331,7 @@ end
 
 ---@param config GruvboxConfig?
 Gruvbox.setup = function(config)
+  Gruvbox.config = vim.deepcopy(default_config)
   Gruvbox.config = vim.tbl_deep_extend("force", Gruvbox.config, config or {})
 end
 
