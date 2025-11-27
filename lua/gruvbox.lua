@@ -82,6 +82,7 @@ Gruvbox.palette = {
   dark3 = "#665c54",
   dark4 = "#7c6f64",
   dark5 = "#928374",
+  --
   light0_hard = "#f9f5d7",
   light0 = "#fbf1c7",
   light0_soft = "#ebdbb2",
@@ -89,55 +90,63 @@ Gruvbox.palette = {
   light2 = "#c3b499",
   light3 = "#ada088",
   light4 = "#978c76",
+  --
   bright_red = "#fb4934",
-  bright_green = "#b8bb26",
-  bright_yellow = "#fabd2f",
-  bright_blue = "#83a598",
-  bright_purple = "#d3869b",
-  bright_aqua = "#8ec07c",
-  bright_orange = "#fe8019",
-  dark_orange_hard = "#af3a03",
-  bright_magenta = "#ff00ff",
   neutral_red = "#cc241d",
-  neutral_green = "#98971a",
-  dark_neutral_green = "#79740e",
-  dark_yellow_hard = "#5c480a",
-  neutral_yellow = "#d79921",
-  dark_neutral_yellow = "#b57614",
-  neutral_blue = "#458588",
-  dark_neutral_blue = "#076678",
-  neutral_purple = "#b16286",
-  dark_neutral_purple = "#875f87",
-  neutral_aqua = "#689d6a",
-  dark_neutral_aqua = "#427b58",
-  neutral_orange = "#d65d0e",
   faded_red = "#9d0006",
-  faded_green = "#79740e",
-  faded_yellow = "#b57614",
-  dark_blue_hard = "#34516d",
-  faded_blue = "#076678",
-  dark_purple_hard = "#6a1958",
-  faded_purple = "#8f3f71",
-  faded_aqua = "#427b58",
-  faded_orange = "#af3a03",
-  dark_red_hard = "#792329",
   dark_red = "#722529",
+  dark_red_hard = "#792329",
   dark_red_soft = "#7b2c2f",
-  light_red_hard = "#fc9690",
   light_red = "#fc9487",
   light_red_soft = "#f78b7f",
-  dark_green_hard = "#3c6e3c",
+  light_red_hard = "#fc9690",
+  --
+  bright_green = "#b8bb26",
+  neutral_green = "#98971a",
+  faded_green = "#79740e",
   dark_green = "#62693e",
+  dark_neutral_green = "#79740e",
   dark_green_soft = "#686d43",
-  light_green_hard = "#d3d6a5",
+  dark_green_hard = "#3c6e3c",
   light_green = "#d5d39b",
   light_green_soft = "#cecb94",
-  dark_aqua_hard = "#3e4934",
+  light_green_hard = "#d3d6a5",
+  --
+  bright_yellow = "#fabd2f",
+  neutral_yellow = "#d79921",
+  faded_yellow = "#b57614",
+  dark_neutral_yellow = "#b57614",
+  dark_yellow_hard = "#5c480a",
+  --
+  bright_blue = "#83a598",
+  neutral_blue = "#458588",
+  faded_blue = "#076678",
+  dark_neutral_blue = "#076678",
+  dark_blue_hard = "#34516d",
+  --
+  bright_purple = "#d3869b",
+  neutral_purple = "#b16286",
+  faded_purple = "#8f3f71",
+  dark_purple_hard = "#6a1958",
+  dark_neutral_purple = "#875f87",
+  --
+  bright_aqua = "#8ec07c",
+  neutral_aqua = "#689d6a",
+  faded_aqua = "#427b58",
+  dark_neutral_aqua = "#427b58",
   dark_aqua = "#49503b",
   dark_aqua_soft = "#525742",
-  light_aqua_hard = "#e6e9c1",
+  dark_aqua_hard = "#3e4934",
   light_aqua = "#e8e5b5",
   light_aqua_soft = "#e1dbac",
+  light_aqua_hard = "#e6e9c1",
+  --
+  bright_orange = "#fe8019",
+  neutral_orange = "#d65d0e",
+  faded_orange = "#af3a03",
+  dark_orange_hard = "#af3a03",
+  --
+  bright_magenta = "#ff00ff",
 }
 
 -- get a hex list of gruvbox colors based on current bg and constrast config
@@ -145,8 +154,11 @@ local function get_colors()
   local p = Gruvbox.palette
   local config = Gruvbox.config
 
-  for color, hex in pairs(config.palette_overrides) do
-    p[color] = hex
+  -- check for palette overrides before constructing color groups
+  if config.palette_overrides then
+    for color, hex in pairs(config.palette_overrides) do
+      p[color] = hex
+    end
   end
 
   local bg = vim.o.background
@@ -251,7 +263,7 @@ local function get_groups()
       colors.fg1,
     }
     for index, value in ipairs(term_colors) do
-      vim.g["terminal_color_" .. index - 1] = value
+      vim.g["terminal_color_" .. (index - 1)] = value
     end
   end
 
