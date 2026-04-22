@@ -85,8 +85,8 @@ Gruvbox.palette = {
   --
   light0_hard = "#f9f5d7",
   light0 = "#fbf1c7",
-  light0_soft = "#ebdbb2",
-  light1 = "#d9c9aa",
+  light0_soft = "#d9c9aa",
+  light1 = "#ebdbb2 ",
   light2 = "#c3b499",
   light3 = "#ada088",
   light4 = "#978c76",
